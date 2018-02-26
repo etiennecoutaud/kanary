@@ -1,0 +1,200 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kanary
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: injector
+  namespace: kanary
+  labels:
+    k8s-app: injector
+spec:
+  selector:
+    k8s-app: injector
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 8080
+    name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-v1
+  namespace: kanary
+  labels:
+    k8s-app: app-v1
+spec:
+  selector:
+    version: v1
+  ports:
+  - protocol: TCP
+    port: 8080
+    name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-v2
+  namespace: kanary
+  labels:
+    k8s-app: app-v2
+spec:
+  selector:
+    version: v2
+  ports:
+  - protocol: TCP
+    port: 8080
+    name: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-v1
+  namespace: kanary
+  labels:
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      version: v1
+  template:
+    metadata:
+      labels:
+        version: v1
+    spec:
+      containers:
+      - name: app-v1
+        imagePullPolicy: Never
+        image: app:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-v2
+  namespace: kanary
+  labels:
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      version: v2
+  template:
+    metadata:
+      labels:
+        version: v2
+    spec:
+      containers:
+      - name: app-v2
+        imagePullPolicy: Never
+        image: app:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: injector
+  namespace: kanary
+  labels:
+    k8s-app: injector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: injector
+  template:
+    metadata:
+      labels:
+        k8s-app: injector
+    spec:
+      containers:
+      - name: injector
+        imagePullPolicy: Never
+        image: injector:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app
+  namespace: kanary
+spec:
+  selector:
+    app: haproxy
+  ports:
+  - protocol: TCP
+    port: 80
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: haproxy
+  namespace: kanary
+data:
+  haproxy.cfg: |
+    global
+      pidfile /var/run/haproxy.pid
+      log 127.0.0.1 local0 info
+      ulimit-n        65536
+
+    defaults
+      mode http
+
+      clitimeout          600000
+      srvtimeout          600000
+      timeout connect     8000
+
+      stats enable
+      stats auth		admin:password
+      stats uri		/monitor
+      stats refresh	5s
+      option httpchk	GET /status
+      retries		5
+
+    frontend http-in
+      bind :80
+      default_backend kanary
+
+    backend kanary
+      server app-v1 app-v1:8080 weight 50
+      server app-v2 app-v2:8080 weight 50
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: haproxy-kanary
+  namespace: kanary
+  labels:
+    app: haproxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: haproxy
+  template:
+    metadata:
+      labels:
+        app: haproxy
+    spec:
+      volumes:
+      - name: ha-cfg
+        configMap:
+          name: haproxy
+      containers:
+      - name: haproxy
+        image: haproxy:latest
+        ports:
+        - containerPort: 80
+        - containerPort: 9000
+        volumeMounts:
+        - name: ha-cfg
+          mountPath:  /usr/local/etc/haproxy
