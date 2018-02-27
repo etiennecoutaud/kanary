@@ -142,19 +142,31 @@ metadata:
 data:
   haproxy.cfg: |
     global
+      #log 127.0.0.1 local2
+      log /dev/log local2 info
       pidfile /var/run/haproxy.pid
-      log 127.0.0.1 local0 info
       ulimit-n        65536
 
     defaults
-      mode http
+      mode    http
+      option  httplog
+      option  dontlognull
+      option  forwardfor
+      option  contstats
+      option  http-server-close
+      option log-health-checks
+      retries 3
+      option  redispatch
+      timeout connect  5000
+      timeout client  10000
+      timeout server  10000
 
-      clitimeout          600000
-      srvtimeout          600000
-      timeout connect     8000
+      # make sure log-format is on a single line
+      log global
+      log-format {"type":"haproxy","timestamp":%Ts,"http_status":%ST,"http_request":"%r","remote_addr":"%ci","bytes_read":%B,"upstream_addr":"%si","backend_name":"%b","retries":%rc,"bytes_uploaded":%U,"upstream_response_time":"%Tr","upstream_connect_time":"%Tc","session_duration":"%Tt","termination_state":"%ts"}
+
 
       stats enable
-      stats auth		admin:password
       stats uri		/monitor
       stats refresh	5s
       option httpchk	GET /status
@@ -191,7 +203,8 @@ spec:
           name: haproxy
       containers:
       - name: haproxy
-        image: haproxy:latest
+        imagePullPolicy: Never
+        image: haproxy:log
         ports:
         - containerPort: 80
         - containerPort: 9000
