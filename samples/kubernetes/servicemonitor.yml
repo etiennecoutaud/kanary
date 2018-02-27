@@ -55,3 +55,22 @@ spec:
   namespaceSelector:
     matchNames:
     - kanary
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: haproxy
+  labels:
+    k8s-app: haproxy
+  namespace: monitoring
+spec:
+  jobLabel: k8s-app
+  endpoints:
+  - port: metrics
+    interval: 5s
+  selector:
+    matchLabels:
+      k8s-app: haproxy
+  namespaceSelector:
+    matchNames:
+    - kanary

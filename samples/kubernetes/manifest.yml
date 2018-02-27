@@ -127,12 +127,18 @@ kind: Service
 metadata:
   name: app
   namespace: kanary
+  labels:
+    k8s-app: haproxy
 spec:
   selector:
     app: haproxy
   ports:
   - protocol: TCP
     port: 80
+    name: http
+  - protocol: TCP
+    port: 9101
+    name: metrics
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -211,3 +217,8 @@ spec:
         volumeMounts:
         - name: ha-cfg
           mountPath:  /usr/local/etc/haproxy
+      - name: metric-sidecar
+        imagePullPolicy: Never 
+        image: metrics-sidecar:latest
+        ports:
+        - containerPort: 9101
