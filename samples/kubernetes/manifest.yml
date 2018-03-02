@@ -69,8 +69,8 @@ spec:
     spec:
       containers:
       - name: app-v1
-        imagePullPolicy: Never
-        image: app:latest
+        imagePullPolicy: Always
+        image: us.gcr.io/tensile-talent-194316/kanary/app:latest
         ports:
         - containerPort: 8080
 ---
@@ -93,8 +93,8 @@ spec:
     spec:
       containers:
       - name: app-v2
-        imagePullPolicy: Never
-        image: app:latest
+        imagePullPolicy: Always
+        image: us.gcr.io/tensile-talent-194316/kanary/app:latest
         ports:
         - containerPort: 8080
 ---
@@ -117,8 +117,8 @@ spec:
     spec:
       containers:
       - name: injector
-        imagePullPolicy: Never
-        image: injector:latest
+        imagePullPolicy: Always
+        image: us.gcr.io/tensile-talent-194316/kanary/injector:latest
         ports:
         - containerPort: 8080
 ---
@@ -209,8 +209,8 @@ spec:
           name: haproxy
       containers:
       - name: haproxy
-        imagePullPolicy: Never
-        image: haproxy:log
+        imagePullPolicy: Always
+        image: us.gcr.io/tensile-talent-194316/kanary/haproxy:latest
         ports:
         - containerPort: 80
         - containerPort: 9000
@@ -218,7 +218,7 @@ spec:
         - name: ha-cfg
           mountPath:  /usr/local/etc/haproxy
       - name: metric-sidecar
-        imagePullPolicy: Never 
-        image: metrics-sidecar:latest
+        imagePullPolicy: Always 
+        image: us.gcr.io/tensile-talent-194316/kanary/metrics-sidecar:latest
         ports:
         - containerPort: 9101
