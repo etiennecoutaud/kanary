@@ -1,0 +1,117 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kanary
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: injector
+  namespace: kanary
+  labels:
+    k8s-app: injector
+spec:
+  selector:
+    k8s-app: injector
+  ports:
+  - protocol: TCP
+    port: 8080
+    name: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-v1
+  namespace: kanary
+  labels:
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      version: v1
+  template:
+    metadata:
+      labels:
+        version: v1
+    spec:
+      containers:
+      - name: app-v1
+        imagePullPolicy: Always
+        image: etiennecoutaud/app:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-v2
+  namespace: kanary
+  labels:
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      version: v2
+  template:
+    metadata:
+      labels:
+        version: v2
+    spec:
+      containers:
+      - name: app-v2
+        imagePullPolicy: Always
+        image: etiennecoutaud/app:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: injector
+  namespace: kanary
+  labels:
+    k8s-app: injector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: injector
+  template:
+    metadata:
+      labels:
+        k8s-app: injector
+    spec:
+      containers:
+      - name: injector
+        image: etiennecoutaud/injector:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: kanary.k8s.io/v1
+kind: Kanary
+metadata:
+  name: simple-kanary
+  annotations:
+    enable-monitoring: true
+  namespace: kanary
+spec:
+  destination:
+    Name: app
+  route:
+  - backend:
+      Name: routev1
+      PodSelector:
+        MatchLabels:
+          version: v1
+      port: 8080
+    Weight: 75
+  - backend:
+      Name: routev2
+      PodSelector:
+        MatchLabels:
+          version: v2
+      port: 8080
+    Weight: 25

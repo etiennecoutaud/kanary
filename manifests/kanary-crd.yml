@@ -1,0 +1,15 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: kanaries.kanary.k8s.io
+spec:
+  group: kanary.k8s.io
+  names:
+    kind: Kanary
+    listKind: KanaryList
+    plural: kanaries
+    singular: kanary
+    shortNames:
+    - ky
+  scope: Namespaced
+  version: v1

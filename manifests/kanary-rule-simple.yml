@@ -1,0 +1,27 @@
+apiVersion: kanary.k8s.io/v1
+kind: Kanary
+metadata:
+  name: simple-kanary
+  annotations:
+    enable-monitoring: true
+spec:
+  destination:
+    Name: app
+    PodSelector:
+      MatchLabels:
+        run: toto
+  route:
+  - backend:
+      Name: routev1
+      PodSelector:
+        MatchLabels:
+          version: v1
+      port: 8080
+    Weight: 75
+  - backend:
+      Name: routev2
+      PodSelector:
+        MatchLabels:
+          version: v2
+      port: 9090
+    Weight: 25

@@ -1,0 +1,37 @@
+package: github.com/etiennecoutaud/kanary
+import:
+- package: github.com/golang/glog
+- package: github.com/prometheus/client_golang
+  version: ^0.9.0-pre1
+  subpackages:
+  - prometheus
+  - prometheus/promhttp
+- package: k8s.io/apimachinery
+  subpackages:
+  - pkg/apis/meta/v1
+  - pkg/runtime
+  - pkg/runtime/schema
+- package: k8s.io/kops
+  version: ^1.9.0-alpha.1
+  subpackages:
+  - pkg/client/clientset_generated/clientset
+- package: k8s.io/kubernetes
+  version: ^1.11.0-alpha.0
+  subpackages:
+  - pkg/kubectl/scheme
+  - staging/src/k8s.io/apimachinery/pkg/util/runtime
+  - staging/src/k8s.io/apimachinery/pkg/util/wait
+  - staging/src/k8s.io/client-go/informers
+  - staging/src/k8s.io/client-go/kubernetes
+  - staging/src/k8s.io/client-go/tools/cache
+  - staging/src/k8s.io/client-go/tools/clientcmd
+  - staging/src/k8s.io/client-go/tools/record
+  - staging/src/k8s.io/client-go/util/workqueue
+  - staging/src/k8s.io/sample-controller/pkg/signals
+- package: k8s.io/code-generator
+- package: goji.io
+  version: ^2.0.0
+- package: k8s.io/client-go
+  version: ^6.0.0
+  subpackages:
+  - listers/apps/v1

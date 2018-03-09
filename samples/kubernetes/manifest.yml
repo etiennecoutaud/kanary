@@ -14,7 +14,6 @@ metadata:
 spec:
   selector:
     k8s-app: injector
-  type: NodePort
   ports:
   - protocol: TCP
     port: 8080
@@ -183,8 +182,8 @@ data:
       default_backend kanary
 
     backend kanary
-      server app-v1 app-v1:8080 weight 50
-      server app-v2 app-v2:8080 weight 50
+      server app-v1 app-v1:8080 weight 80
+      server app-v2 app-v2:8080 weight 20
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -218,7 +217,7 @@ spec:
         - name: ha-cfg
           mountPath:  /usr/local/etc/haproxy
       - name: metric-sidecar
-        imagePullPolicy: Always 
+        imagePullPolicy: Always
         image: us.gcr.io/tensile-talent-194316/kanary/metrics-sidecar:latest
         ports:
         - containerPort: 9101

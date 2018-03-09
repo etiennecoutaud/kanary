@@ -1,0 +1,285 @@
+hash: f42e3dcc9070d8a435debdc3b4b4915084ac8a2ecc3d94fe7fef26364fccf128
+updated: 2018-03-07T19:04:17.412104+01:00
+imports:
+- name: github.com/beorn7/perks
+  version: 4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9
+  subpackages:
+  - quantile
+- name: github.com/davecgh/go-spew
+  version: 782f4967f2dc4564575ca782fe2d04090b5faca8
+  subpackages:
+  - spew
+- name: github.com/ghodss/yaml
+  version: 73d445a93680fa1a78ae23a5839bad48f32ba1ee
+- name: github.com/gogo/protobuf
+  version: c0656edd0d9eab7c66d1eb0c568f9039345796f7
+  subpackages:
+  - proto
+  - sortkeys
+- name: github.com/golang/glog
+  version: 44145f04b68cf362d9c4df2182967c2275eaefed
+- name: github.com/golang/groupcache
+  version: 02826c3e79038b59d737d3b1c0a1d937f71a4433
+  subpackages:
+  - lru
+- name: github.com/golang/protobuf
+  version: 1643683e1b54a9e88ad26d98f81400c8c9d9f4f9
+  subpackages:
+  - proto
+  - ptypes
+  - ptypes/any
+  - ptypes/duration
+  - ptypes/timestamp
+- name: github.com/google/btree
+  version: e89373fe6b4a7413d7acd6da1725b83ef713e6e4
+- name: github.com/google/gofuzz
+  version: 44d81051d367757e1c7c6a5a86423ece9afcf63c
+- name: github.com/googleapis/gnostic
+  version: 0c5108395e2debce0d731cf0287ddf7242066aba
+  subpackages:
+  - OpenAPIv2
+  - compiler
+  - extensions
+- name: github.com/gregjones/httpcache
+  version: 9cad4c3443a7200dd6400aef47183728de563a38
+  subpackages:
+  - diskcache
+- name: github.com/hashicorp/golang-lru
+  version: a0d98a5f288019575c6d1f4bb1573fef2d1fcdc4
+  subpackages:
+  - simplelru
+- name: github.com/howeyc/gopass
+  version: bf9dde6d0d2c004a008c27aaee91170c786f6db8
+- name: github.com/imdario/mergo
+  version: 6633656539c1639d9d78127b7d47c622b5d7b6dc
+- name: github.com/json-iterator/go
+  version: 13f86432b882000a51c6e610c620974462691a97
+- name: github.com/juju/ratelimit
+  version: 59fac5042749a5afb9af70e813da1dd5474f0167
+- name: github.com/matttproud/golang_protobuf_extensions
+  version: fc2b8d3a73c4867e51861bbdd5ae3c1f0869dd6a
+  subpackages:
+  - pbutil
+- name: github.com/peterbourgon/diskv
+  version: 2973218375c3d13162e1d3afe1708aaee318ef3f
+- name: github.com/prometheus/client_golang
+  version: 967789050ba94deca04a5e84cce8ad472ce313c1
+  subpackages:
+  - prometheus
+  - prometheus/promhttp
+- name: github.com/prometheus/client_model
+  version: 99fa1f4be8e564e8a6b613da7fa6f46c9edafc6c
+  subpackages:
+  - go
+- name: github.com/prometheus/common
+  version: 13ba4ddd0caa9c28ca7b7bffe1dfa9ed8d5ef207
+  subpackages:
+  - expfmt
+  - internal/bitbucket.org/ww/goautoneg
+  - model
+- name: github.com/prometheus/procfs
+  version: 65c1f6f8f0fc1e2185eb9863a3bc751496404259
+  subpackages:
+  - xfs
+- name: github.com/spf13/pflag
+  version: 4c012f6dcd9546820e378d0bdda4d8fc772cdfea
+- name: goji.io
+  version: 0d89ff54b2c18c9c4ba530e32496aef902d3c6cd
+  subpackages:
+  - internal
+  - pat
+  - pattern
+- name: golang.org/x/crypto
+  version: 81e90905daefcd6fd217b62423c0908922eadb30
+  subpackages:
+  - ssh/terminal
+- name: golang.org/x/net
+  version: 1c05540f6879653db88113bc4a2b70aec4bd491f
+  subpackages:
+  - context
+  - context/ctxhttp
+  - http2
+  - http2/hpack
+  - idna
+  - lex/httplex
+- name: golang.org/x/sys
+  version: 95c6576299259db960f6c5b9b69ea52422860fce
+  subpackages:
+  - unix
+  - windows
+- name: golang.org/x/text
+  version: b19bf474d317b857955b12035d2c5acb57ce8b01
+  subpackages:
+  - secure/bidirule
+  - transform
+  - unicode/bidi
+  - unicode/norm
+- name: gopkg.in/inf.v0
+  version: 3887ee99ecf07df5b447e9b00d9c0b2adaa9f3e4
+- name: gopkg.in/yaml.v2
+  version: 670d4cfef0544295bc27a114dbac37980d83185a
+- name: k8s.io/api
+  version: 927313aa2f67b6f51d3ea954027cb009efb31941
+  subpackages:
+  - admissionregistration/v1alpha1
+  - admissionregistration/v1beta1
+  - apps/v1
+  - apps/v1beta1
+  - apps/v1beta2
+  - authentication/v1
+  - authentication/v1beta1
+  - authorization/v1
+  - authorization/v1beta1
+  - autoscaling/v1
+  - autoscaling/v2beta1
+  - batch/v1
+  - batch/v1beta1
+  - batch/v2alpha1
+  - certificates/v1beta1
+  - core/v1
+  - events/v1beta1
+  - extensions/v1beta1
+  - imagepolicy/v1alpha1
+  - networking/v1
+  - policy/v1beta1
+  - rbac/v1
+  - rbac/v1alpha1
+  - rbac/v1beta1
+  - scheduling/v1alpha1
+  - settings/v1alpha1
+  - storage/v1
+  - storage/v1alpha1
+  - storage/v1beta1
+- name: k8s.io/apimachinery
+  version: e9ff529c66f83aeac6dff90f11ea0c5b7c4d626a
+  subpackages:
+  - pkg/api/equality
+  - pkg/api/errors
+  - pkg/api/meta
+  - pkg/api/resource
+  - pkg/api/testing
+  - pkg/api/testing/fuzzer
+  - pkg/api/testing/roundtrip
+  - pkg/apimachinery
+  - pkg/apimachinery/announced
+  - pkg/apimachinery/registered
+  - pkg/apis/meta/fuzzer
+  - pkg/apis/meta/internalversion
+  - pkg/apis/meta/v1
+  - pkg/apis/meta/v1/unstructured
+  - pkg/apis/meta/v1beta1
+  - pkg/conversion
+  - pkg/conversion/queryparams
+  - pkg/fields
+  - pkg/labels
+  - pkg/runtime
+  - pkg/runtime/schema
+  - pkg/runtime/serializer
+  - pkg/runtime/serializer/json
+  - pkg/runtime/serializer/protobuf
+  - pkg/runtime/serializer/recognizer
+  - pkg/runtime/serializer/streaming
+  - pkg/runtime/serializer/versioning
+  - pkg/selection
+  - pkg/types
+  - pkg/util/cache
+  - pkg/util/clock
+  - pkg/util/diff
+  - pkg/util/errors
+  - pkg/util/framer
+  - pkg/util/intstr
+  - pkg/util/json
+  - pkg/util/mergepatch
+  - pkg/util/net
+  - pkg/util/runtime
+  - pkg/util/sets
+  - pkg/util/strategicpatch
+  - pkg/util/validation
+  - pkg/util/validation/field
+  - pkg/util/wait
+  - pkg/util/yaml
+  - pkg/version
+  - pkg/watch
+  - third_party/forked/golang/json
+  - third_party/forked/golang/reflect
+- name: k8s.io/client-go
+  version: 78700dec6369ba22221b72770783300f143df150
+  subpackages:
+  - discovery
+  - discovery/fake
+  - kubernetes
+  - kubernetes/scheme
+  - kubernetes/typed/admissionregistration/v1alpha1
+  - kubernetes/typed/admissionregistration/v1beta1
+  - kubernetes/typed/apps/v1
+  - kubernetes/typed/apps/v1beta1
+  - kubernetes/typed/apps/v1beta2
+  - kubernetes/typed/authentication/v1
+  - kubernetes/typed/authentication/v1beta1
+  - kubernetes/typed/authorization/v1
+  - kubernetes/typed/authorization/v1beta1
+  - kubernetes/typed/autoscaling/v1
+  - kubernetes/typed/autoscaling/v2beta1
+  - kubernetes/typed/batch/v1
+  - kubernetes/typed/batch/v1beta1
+  - kubernetes/typed/batch/v2alpha1
+  - kubernetes/typed/certificates/v1beta1
+  - kubernetes/typed/core/v1
+  - kubernetes/typed/events/v1beta1
+  - kubernetes/typed/extensions/v1beta1
+  - kubernetes/typed/networking/v1
+  - kubernetes/typed/policy/v1beta1
+  - kubernetes/typed/rbac/v1
+  - kubernetes/typed/rbac/v1alpha1
+  - kubernetes/typed/rbac/v1beta1
+  - kubernetes/typed/scheduling/v1alpha1
+  - kubernetes/typed/settings/v1alpha1
+  - kubernetes/typed/storage/v1
+  - kubernetes/typed/storage/v1alpha1
+  - kubernetes/typed/storage/v1beta1
+  - listers/apps/v1
+  - pkg/version
+  - rest
+  - rest/watch
+  - testing
+  - tools/auth
+  - tools/cache
+  - tools/clientcmd
+  - tools/clientcmd/api
+  - tools/clientcmd/api/latest
+  - tools/clientcmd/api/v1
+  - tools/metrics
+  - tools/pager
+  - tools/record
+  - tools/reference
+  - transport
+  - util/buffer
+  - util/cert
+  - util/flowcontrol
+  - util/homedir
+  - util/integer
+  - util/workqueue
+- name: k8s.io/code-generator
+  version: 893b4433a4ba929dd0dacebf7c8956682d7a5d5f
+- name: k8s.io/kops
+  version: f799036a3b2a87e7ff31c68da950d9e7e2f967ea
+  subpackages:
+  - pkg/client/clientset_generated/clientset
+- name: k8s.io/kube-openapi
+  version: 50ae88d24ede7b8bad68e23c805b5d3da5c8abaf
+  subpackages:
+  - pkg/util/proto
+- name: k8s.io/kubernetes
+  version: 79b15896576b7cd8f40d952f5e8307d29a21ac28
+  subpackages:
+  - pkg/kubectl/scheme
+  - staging/src/k8s.io/apimachinery/pkg/util/runtime
+  - staging/src/k8s.io/apimachinery/pkg/util/wait
+  - staging/src/k8s.io/client-go/informers
+  - staging/src/k8s.io/client-go/kubernetes
+  - staging/src/k8s.io/client-go/tools/cache
+  - staging/src/k8s.io/client-go/tools/clientcmd
+  - staging/src/k8s.io/client-go/tools/record
+  - staging/src/k8s.io/client-go/util/workqueue
+  - staging/src/k8s.io/sample-controller/pkg/signals
+testImports: []
