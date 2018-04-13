@@ -1,5 +1,5 @@
 # Kanary : Canary Release Operator for Kubernetes
-[![toto](https://travis-ci.org/etiennecoutaud/kanary.svg?branch=master)](https://travis-ci.org/etiennecoutaud/kanary.svg?branch=master)
+[![toto](https://travis-ci.org/etiennecoutaud/kanary.svg?branch=master)](https://travis-ci.org/etiennecoutaud/kanary)
 [![codecov](https://codecov.io/gh/etiennecoutaud/kanary/branch/master/graph/badge.svg)](https://codecov.io/gh/etiennecoutaud/kanary)
 [![Go Report Master](https://goreportcard.com/badge/github.com/etiennecoutaud/kanary)](https://goreportcard.com/report/github.com/etiennecoutaud/kanary)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/etiennecoutaud/kanary/blob/master/LICENSE)
