@@ -63,6 +63,9 @@ In this example:
 * Multiple backends can be set, sum of weight must be equal to 100
 
 ## Architecture and example
+
+*Diagrams done with* [Kubernetes icons](https://github.com/octo-technology/kubernetes-icons)
+
 Initial state: 2 version of the same application are running, each pods is exposed with a service
 ![initial](docs/archi-initial.png)
 
