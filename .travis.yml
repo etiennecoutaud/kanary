@@ -7,5 +7,10 @@ script:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - export REPO=etiennecoutaud/kanary-operator
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else (echo $TRAVIS_BRANCH | cut -c 9-) ; fi`
+  - docker build -f Dockerfile -t $REPO:$TAG .
+  - docker push $REPO:$TAG
 
   

@@ -73,15 +73,15 @@ spec:
 apiVersion: kanary.k8s.io/v1
 kind: Kanary
 metadata:
-  name: simple-kanary-2
+  name: simple-kanary-rule
 spec:
-  destination: route2
+  destination: myapp
   routes:
   - backend:
-     ServiceName: "appv1"
-     ServicePort: "http"
-    Weight: 40
+     serviceName: "myapp-v1"
+     servicePort: "http"
+    weight: 80
   - backend:
-      ServiceName: "appv2"
-      ServicePort: 9090
-    Weight: 60
+      serviceName: "myapp-v2"
+      servicePort: 9090
+    weight: 20

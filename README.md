@@ -7,7 +7,7 @@
 
 This Kubernetes operator aim to manage canary release deployment using HAProxy container as L4 (TCP) loadbalancer
 
-## Installation
+##Operator installation
 ```
 kubectl apply -f https://URL
 ```
@@ -30,8 +30,47 @@ A RBAC dedicated role is needed to provide the ability to perform all operation 
 
 ## CustomRessourceDefinitions
 
+Kanary Operator manipulate *kanary* custom ressource, short name is *ky*
+
+```
+kubectl get kanary
+NAME                 AGE
+simple-kanary-rule   9s
+```
+
+```yaml
+apiVersion: kanary.k8s.io/v1
+kind: Kanary
+metadata:
+  name: simple-kanary-rule
+spec:
+  destination: myapp
+  routes:
+  - backend:
+     serviceName: "myapp-v1"
+     servicePort: "http"
+    weight: 80
+  - backend:
+      serviceName: "myapp-v2"
+      servicePort: 9090
+    weight: 20
+```
+In this example:
+* HAProxy will be exposed by *myapp* service, indicated in `destination` field
+* Canary release is loadbalancing to *myapp-v1* and *myapp-v2* services previously created by the user
+* HAProxy referenced to service backend port with `servicePort` fiels, it can be port name or port value
+* Loadbalancing is performed based on `weight` field
+* Multiple backends can be set, sum of weight must be equal to 100
+
 ## Architecture and example
+Initial state: 2 version of the same application are running, each pods is exposed with a service
+![initial](docs/archi-initial.png)
+
+Kanary ressource is apply to the namespace to loadbalance pods depend on weight
+![ky](docs/archi-ky.png)
+
 
 ## License
 The work done has been licensed under Apache License 2.0. The license file can be found [here](LICENSE). You can find
 out more about the license at [www.apache.org/licenses/LICENSE-2.0](//www.apache.org/licenses/LICENSE-2.0).
+

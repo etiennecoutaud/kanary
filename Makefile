@@ -1,8 +1,7 @@
 HUB :=
 REPO := etiennecoutaud
-IMAGE := $(if $(HUB),$(HUB)/)$(REPO)/kanary-operator
-TAG := $(shell git describe --tags --always)
-TESTIMAGE :=
+IMAGE := kanary-operator
+TAG := dev
 
 build:
 	go build -i github.com/etiennecoutaud/kanary/cmd/kanary-operator
@@ -17,8 +16,9 @@ darwin:
 linux:
 	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s" -o kanary-operator github.com/etiennecoutaud/kanary/cmd/kanary-operator
 
-image:
-	docker build -t "$(IMAGE):$(TAG)" .
+release:
+	docker build -t "$(REPO)/$(IMAGE):$(TAG)" .
+	docker push "$(REPO)/$(IMAGE):$(TAG)"
 
 test: 
 	go test  $(shell go list ./... | grep -v fake) -coverprofile=coverage.txt -covermode=atomic

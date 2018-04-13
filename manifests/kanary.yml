@@ -1,0 +1,120 @@
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: kanaries.kanary.k8s.io
+spec:
+  group: kanary.k8s.io
+  names:
+    kind: Kanary
+    listKind: KanaryList
+    plural: kanaries
+    singular: kanary
+    shortNames:
+    - ky
+  scope: Namespaced
+  version: v1
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kanary-operator
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kanary-operator
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - service
+  verbs:
+  - list
+  - get
+  - create
+  - patch
+  - update
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - endpoint
+  verbs:
+  - list
+  - get
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - configmap
+  verbs:
+  - list
+  - get
+  - create
+  - patch
+  - update
+- apiGroups:
+  - kaos.k8s.io
+  resources:
+  - kaosrules
+  verbs:
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kanary-operator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kanary-operator
+subjects:
+- kind: ServiceAccount
+  name: kanary-operator
+  namespace: kube-system
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: kube-system
+  name: kanary-operator
+spec:
+  selector:
+    matchLabels:
+      app: kanary-operator
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kanary-operator
+    spec:
+      serviceAccountName: kanary-operator
+      containers:
+      - name: kanary-operator
+        image: etienencoutaud/kanary:latest
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
+        ports:
+        - containerPort: 8080
+          name: http
