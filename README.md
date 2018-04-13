@@ -13,7 +13,7 @@ kubectl apply -f https://raw.githubusercontent.com/etiennecoutaud/kanary/master/
 ```
 
 ## How it works
-Kanary Operator will acting on *kanary* CRD and will perform:
+Kanary Operator will act on *kanary* CRD and will perform:
 * HAProxy loabalancer generation
 * Manage configuration and update based on **weight loadbalancing**
 * Reference pod endpoint directly for more efficiency
