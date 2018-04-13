@@ -7,7 +7,7 @@
 
 This Kubernetes operator aim to manage canary release deployment using HAProxy container as L4 (TCP) loadbalancer
 
-##Operator installation
+## Operator installation
 ```
 kubectl apply -f https://raw.githubusercontent.com/etiennecoutaud/kanary/master/manifests/kanary.yml
 ```
