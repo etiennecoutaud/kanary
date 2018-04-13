@@ -12,22 +12,6 @@ This Kubernetes operator aim to manage canary release deployment using HAProxy c
 kubectl apply -f https://raw.githubusercontent.com/etiennecoutaud/kanary/master/manifests/kanary.yml
 ```
 
-## How it works
-Kanary Operator will act on *kanary* CRD and will perform:
-* HAProxy loabalancer generation
-* Manage configuration and update based on **weight loadbalancing**
-* Reference pod endpoint directly for more efficiency
-* Trigger automatic HAProxy rolling update when configuration changed for no service outage
-* Manage route as Kubernetes service to access to HAProxy
-
-Kanary Operator is manipulating Kubernetes ressources:
-* Deployment
-* Endpoint
-* ConfigMap
-* Service
-
-A RBAC dedicated role is needed to provide the ability to perform all operation on theses ressources
-
 ## CustomRessourceDefinitions
 
 Kanary Operator manipulate *kanary* custom ressource, short name is *ky*
@@ -61,6 +45,22 @@ In this example:
 * HAProxy referenced to service backend port with `servicePort` fiels, it can be port name or port value
 * Loadbalancing is performed based on `weight` field
 * Multiple backends can be set, sum of weight must be equal to 100
+
+## How it works
+Kanary Operator will act on *kanary* CRD and will perform:
+* HAProxy loabalancer generation
+* Manage configuration and update based on **weight loadbalancing**
+* Reference pod endpoint directly for more efficiency
+* Trigger automatic HAProxy rolling update when configuration changed for no service outage
+* Manage route as Kubernetes service to access to HAProxy
+
+Kanary Operator is manipulating Kubernetes ressources:
+* Deployment
+* Endpoint
+* ConfigMap
+* Service
+
+A RBAC dedicated role is needed to provide the ability to perform all operation on theses ressources
 
 ## Architecture and example
 
