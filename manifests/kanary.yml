@@ -27,40 +27,37 @@ metadata:
   name: kanary-operator
 rules:
 - apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - get
+  - watch
+  - create
+  - update
+- apiGroups:
   - ""
   resources:
-  - service
+  - services
   verbs:
-  - list
   - get
+  - watch
   - create
-  - patch
   - update
   - delete
 - apiGroups:
   - ""
   resources:
-  - endpoint
+  - endpoints
   verbs:
+  - watch
   - list
   - get
-  - patch
   - update
 - apiGroups:
-  - ""
+  - kanary.k8s.io
   resources:
-  - pods
-  - configmap
-  verbs:
-  - list
-  - get
-  - create
-  - patch
-  - update
-- apiGroups:
-  - kaos.k8s.io
-  resources:
-  - kaosrules
+  - kanaries
   verbs:
   - get
   - list
@@ -70,7 +67,9 @@ rules:
   - ""
   resources:
   - events
+  - configmaps
   verbs:
+  - get
   - create
   - patch
   - update
@@ -106,7 +105,11 @@ spec:
       serviceAccountName: kanary-operator
       containers:
       - name: kanary-operator
-        image: etienencoutaud/kanary:latest
+        image: etiennecoutaud/kanary-operator:latest
+        command:
+        - ./kanary-operator
+        - -logtostderr
+        - -v=2
         livenessProbe:
           httpGet:
             path: /healthz

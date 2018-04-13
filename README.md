@@ -9,7 +9,7 @@ This Kubernetes operator aim to manage canary release deployment using HAProxy c
 
 ##Operator installation
 ```
-kubectl apply -f https://URL
+kubectl apply -f https://raw.githubusercontent.com/etiennecoutaud/kanary/master/manifests/kanary.yml
 ```
 
 ## How it works
@@ -69,6 +69,10 @@ Initial state: 2 version of the same application are running, each pods is expos
 Kanary ressource is apply to the namespace to loadbalance pods depend on weight
 ![ky](docs/archi-ky.png)
 
+This stack can be deployed in your cluster:
+```
+kubectl apply -f https://raw.githubusercontent.com/etiennecoutaud/kanary/master/examples/simple-stack.yml
+```
 
 ## License
 The work done has been licensed under Apache License 2.0. The license file can be found [here](LICENSE). You can find
