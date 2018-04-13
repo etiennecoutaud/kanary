@@ -105,7 +105,7 @@ spec:
       serviceAccountName: kanary-operator
       containers:
       - name: kanary-operator
-        image: etiennecoutaud/kanary-operator:latest
+        image: etiennecoutaud/kanary-operator:v0.1
         command:
         - ./kanary-operator
         - -logtostderr
