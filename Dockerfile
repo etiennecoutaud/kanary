@@ -1,4 +1,4 @@
-FROM golang:1.9
+FROM golang:1.10
 COPY . /go/src/github.com/etiennecoutaud/kanary
 WORKDIR /go/src/github.com/etiennecoutaud/kanary/cmd/kanary-operator
 RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s" -o kanary-operator
