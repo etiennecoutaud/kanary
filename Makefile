@@ -9,27 +9,19 @@ build:
 
 run: build
 	kubectl apply -f manifests/kanary-crd.yml
-	./kanary-operator -kubeconfig=$(HOME)/.kube/config -v=2
+	./kanary-operator -kubeconfig=$(HOME)/.kube/config -v=2 -logtostderr=true
 
 darwin:
-	# Compile statically linked binary for darwin.
 	GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s" -o kanary-operator github.com/etiennecoutaud/kanary/cmd/kanary-operator
+
+linux:
+	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s" -o kanary-operator github.com/etiennecoutaud/kanary/cmd/kanary-operator
 
 image:
 	docker build -t "$(IMAGE):$(TAG)" .
 
-test:
-	go test -v $(shell go list ./... | grep -v /vendor/ | grep -v /test/)
-
-# requires minikube to be running
-e2e:
-	@if test 'x$(TESTIMAGE)' = 'x'; then echo "TESTIMAGE must be passed."; exit 1; fi
-	go test -v ./test/e2e/ --image "$(TESTIMAGE)" --kubeconfig ~/.kube/config --ip "$$(minikube ip)"
-
-clean-test:
-	kubectl delete namespace testing
-	kubectl delete clusterrolebinding habitat-operator
-	kubectl delete clusterrole habitat-operator
+test: 
+	go test  $(shell go list ./... | grep -v fake) -coverprofile=coverage.txt -covermode=atomic
 
 dep:
 	glide up

@@ -1,27 +1,87 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: appv1
+  labels:
+    k8s-app: injector
+spec:
+  selector:
+    version: v1
+  ports:
+  - protocol: TCP
+    port: 8080
+    name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: appv2
+  labels:
+    k8s-app: app-v1
+spec:
+  selector:
+    version: v2
+  ports:
+  - protocol: TCP
+    port: 9090
+    name: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-v1
+  labels:
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      version: v1
+  template:
+    metadata:
+      labels:
+        version: v1
+    spec:
+      containers:
+      - name: app-v1
+        image: etiennecoutaud/app:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-v2
+  labels:
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      version: v2
+  template:
+    metadata:
+      labels:
+        version: v2
+    spec:
+      containers:
+      - name: app-v2
+        image: etiennecoutaud/app:latest
+        ports:
+        - containerPort: 8080
+---
 apiVersion: kanary.k8s.io/v1
 kind: Kanary
 metadata:
-  name: simple-kanary
-  annotations:
-    enable-monitoring: true
+  name: simple-kanary-2
 spec:
-  destination:
-    Name: app
-    PodSelector:
-      MatchLabels:
-        run: toto
-  route:
+  destination: route2
+  routes:
   - backend:
-      Name: routev1
-      PodSelector:
-        MatchLabels:
-          version: v1
-      port: 8080
-    Weight: 75
+     ServiceName: "appv1"
+     ServicePort: "http"
+    Weight: 40
   - backend:
-      Name: routev2
-      PodSelector:
-        MatchLabels:
-          version: v2
-      port: 9090
-    Weight: 25
+      ServiceName: "appv2"
+      ServicePort: 9090
+    Weight: 60

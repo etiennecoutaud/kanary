@@ -15,6 +15,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"goji.io"
 	"goji.io/pat"
+	kubeinformers "k8s.io/client-go/informers"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 )
@@ -54,9 +55,12 @@ func main() {
 
 	kanaryInformerFactory := informers.NewSharedInformerFactory(kanaryClient, time.Second*30)
 
-	controller := controller.NewController(kubeClient, kanaryClient, kanaryInformerFactory)
+	kubeInformerFactory := kubeinformers.NewSharedInformerFactory(kubeClient, time.Second*30)
+
+	controller := controller.NewController(kubeClient, kanaryClient, kubeInformerFactory, kanaryInformerFactory)
 
 	go kanaryInformerFactory.Start(stopCh)
+	go kubeInformerFactory.Start(stopCh)
 
 	mux := goji.NewMux()
 	mux.Use(debugHandler)
@@ -68,5 +72,5 @@ func main() {
 	if err = controller.Run(2, stopCh); err != nil {
 		glog.Fatalf("Error running controller: %s", err.Error())
 	}
-
+	glog.Flush()
 }

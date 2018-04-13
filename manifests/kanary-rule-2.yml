@@ -1,0 +1,13 @@
+apiVersion: kanary.k8s.io/v1
+kind: Kanary
+metadata:
+  name: simple-kanary-3
+  annotations:
+    enable-monitoring: true
+spec:
+  destination: route3
+  routes:
+  - backend:
+      ServiceName: "appv2"
+      ServicePort: 9090
+    Weight: 100
