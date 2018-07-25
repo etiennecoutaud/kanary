@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/etiennecoutaud/kanary/blob/master/LICENSE)
 
 
-This Kubernetes operator aim to manage canary release deployment using HAProxy container as L4 (TCP) loadbalancer
+This Kubernetes operator aims to manage canary release deployment using HAProxy container as L4 (TCP) loadbalancer
 
 ## Operator installation
 ```
