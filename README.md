@@ -24,7 +24,7 @@ simple-kanary-rule   9s
 ```
 
 ```yaml
-apiVersion: kanary.k8s.io/v1
+apiVersion: kanary.pyxida.io/v1alpha1
 kind: Kanary
 metadata:
   name: simple-kanary-rule
